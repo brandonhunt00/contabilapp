@@ -33,12 +33,12 @@ O sistema garante a segurança dos dados e a conformidade legal com as legislaç
 
 <details>
   <summary>Conceitual</summary>
-![Projeto-BD (1)](https://github.com/user-attachments/assets/7ae43edb-f84d-418b-bc9b-2852360cb52e)
+![Projeto-BD](https://github.com/user-attachments/assets/e071e89c-c99c-4224-bc87-e6bf227e334d)
 </details>
 
 <details>
   <summary>Lógico</summary>
-![Logico_1](https://github.com/user-attachments/assets/2993c3ee-d4a4-40e5-a1ae-19194ab0d662)
+![Logico_1](https://github.com/user-attachments/assets/aca2748a-f8a2-46c0-8fa7-1f1f8adfd11a)
 </details>
 
 ## Membros do Grupo:
