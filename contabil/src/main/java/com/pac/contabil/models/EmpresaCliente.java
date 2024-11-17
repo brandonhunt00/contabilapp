@@ -1,19 +1,20 @@
 package com.pac.contabil.models;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
+import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
-@Entity
-@Setter
-@Getter
+@Data
 public class EmpresaCliente {
-
-    @Id
     private String cnpj;
     private String razaoSocial;
-    private String endereco;
     private String telefone;
+    private String telefone2;
     private String email;
+    private String rua;
+    private String numero;
+    private String municipio;
+
+    // Getters e Setters
 }
+
