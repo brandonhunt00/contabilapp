@@ -33,7 +33,7 @@ O sistema garante a segurança dos dados e a conformidade legal com as legislaç
 
 <details>
   <summary>Conceitual</summary>
-![Projeto-BD](https://github.com/user-attachments/assets/0adff692-b25f-4aa0-9375-9e704b4a56d5)
+![Projeto-BD](https://github.com/user-attachments/assets/e071e89c-c99c-4224-bc87-e6bf227e334d)
 </details>
 
 <details>
