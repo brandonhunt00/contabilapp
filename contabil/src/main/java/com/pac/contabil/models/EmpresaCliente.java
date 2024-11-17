@@ -2,10 +2,12 @@ package com.pac.contabil.models;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 @Entity
-@Data
+@Setter
+@Getter
 public class EmpresaCliente {
 
     @Id
@@ -14,5 +16,4 @@ public class EmpresaCliente {
     private String endereco;
     private String telefone;
     private String email;
-
 }
