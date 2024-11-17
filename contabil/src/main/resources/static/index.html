@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gerenciamento de Notas Fiscais</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<h1>Gerenciamento de Notas Fiscais</h1>
+
+<form id="notaFiscalForm">
+    <h3>Inserir Nota Fiscal</h3>
+    <input type="text" id="codNota" placeholder="Código da Nota" required>
+    <input type="date" id="dataEmissao" required>
+    <input type="number" id="valorTotal" placeholder="Valor Total" required>
+    <textarea id="descricao" placeholder="Descrição" required></textarea>
+    <input type="text" id="fkEmpresaClienteCnpj" placeholder="CNPJ da Empresa" required>
+    <button type="submit">Inserir</button>
+</form>
+
+<h3>Notas Fiscais Cadastradas</h3>
+<table border="1">
+    <thead>
+    <tr>
+        <th>Código</th>
+        <th>Data de Emissão</th>
+        <th>Valor Total</th>
+        <th>Descrição</th>
+        <th>Empresa (CNPJ)</th>
+    </tr>
+    </thead>
+    <tbody id="notaFiscalTableBody">
+    <!-- Dados serão preenchidos via JS -->
+    </tbody>
+</table>
+
+<script src="script.js"></script>
+</body>
+</html>
