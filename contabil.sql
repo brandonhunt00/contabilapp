@@ -174,62 +174,64 @@ INSERT INTO Imposto (cod_imposto, tipo, aliquota, base_de_calculo) VALUES ('LR_C
 
 DELIMITER //
 
-CREATE FUNCTION calcular_imposto_simples_nacional(faturamento DECIMAL(15, 2), categoria VARCHAR(20))
-RETURNS DECIMAL(15, 2)
-DETERMINISTIC
+CREATE PROCEDURE calcular_imposto_simples_nacional(
+    IN faturamento DECIMAL(15, 2), 
+    IN categoria VARCHAR(20), 
+    OUT resultado DECIMAL(15, 2)
+)
 BEGIN
     DECLARE aliquota DECIMAL(5, 2);
     DECLARE valor_a_deduzir DECIMAL(15, 2);
 
     IF categoria = 'Comércio' THEN
-        CASE
-            WHEN faturamento <= 180000 THEN
-                SET aliquota = 0.04;
-                SET valor_a_deduzir = 0;
-            WHEN faturamento <= 360000 THEN
-                SET aliquota = 0.073;
-                SET valor_a_deduzir = 5940;
-            WHEN faturamento <= 720000 THEN
-                SET aliquota = 0.095;
-                SET valor_a_deduzir = 13860;
-            WHEN faturamento <= 1800000 THEN
-                SET aliquota = 0.107;
-                SET valor_a_deduzir = 22500;
-            WHEN faturamento <= 3600000 THEN
-                SET aliquota = 0.143;
-                SET valor_a_deduzir = 87300;
-            ELSE
-                SET aliquota = 0.19;
-                SET valor_a_deduzir = 378000;
-        END CASE;
+        IF faturamento <= 180000 THEN
+            SET aliquota = 0.04;
+            SET valor_a_deduzir = 0;
+        ELSEIF faturamento <= 360000 THEN
+            SET aliquota = 0.073;
+            SET valor_a_deduzir = 5940;
+        ELSEIF faturamento <= 720000 THEN
+            SET aliquota = 0.095;
+            SET valor_a_deduzir = 13860;
+        ELSEIF faturamento <= 1800000 THEN
+            SET aliquota = 0.107;
+            SET valor_a_deduzir = 22500;
+        ELSEIF faturamento <= 3600000 THEN
+            SET aliquota = 0.143;
+            SET valor_a_deduzir = 87300;
+        ELSE
+            SET aliquota = 0.19;
+            SET valor_a_deduzir = 378000;
+        END IF;
 
     ELSEIF categoria = 'Serviço' THEN
-        CASE
-            WHEN faturamento <= 180000 THEN
-                SET aliquota = 0.06;
-                SET valor_a_deduzir = 0;
-            WHEN faturamento <= 360000 THEN
-                SET aliquota = 0.112;
-                SET valor_a_deduzir = 9360;
-            WHEN faturamento <= 720000 THEN
-                SET aliquota = 0.135;
-                SET valor_a_deduzir = 17640;
-            WHEN faturamento <= 1800000 THEN
-                SET aliquota = 0.16;
-                SET valor_a_deduzir = 35640;
-            WHEN faturamento <= 3600000 THEN
-                SET aliquota = 0.21;
-                SET valor_a_deduzir = 125640;
-            ELSE
-                SET aliquota = 0.33;
-                SET valor_a_deduzir = 648000;
-        END CASE;
+        IF faturamento <= 180000 THEN
+            SET aliquota = 0.06;
+            SET valor_a_deduzir = 0;
+        ELSEIF faturamento <= 360000 THEN
+            SET aliquota = 0.112;
+            SET valor_a_deduzir = 9360;
+        ELSEIF faturamento <= 720000 THEN
+            SET aliquota = 0.135;
+            SET valor_a_deduzir = 17640;
+        ELSEIF faturamento <= 1800000 THEN
+            SET aliquota = 0.16;
+            SET valor_a_deduzir = 35640;
+        ELSEIF faturamento <= 3600000 THEN
+            SET aliquota = 0.21;
+            SET valor_a_deduzir = 125640;
+        ELSE
+            SET aliquota = 0.33;
+            SET valor_a_deduzir = 648000;
+        END IF;
     END IF;
 
-    RETURN (faturamento * aliquota) - valor_a_deduzir;
-END //
+    SET resultado = (faturamento * aliquota) - valor_a_deduzir;
+END;
+//
 
 DELIMITER ;
+
 
 DELIMITER //
 
