@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gerenciamento de Notas Fiscais</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="container">
+    <h1>Gerenciamento de Notas Fiscais</h1>
+
+    <div class="form-container">
+        <h2>Inserir Nota Fiscal</h2>
+        <form id="nota-form">
+            <input type="text" id="codNota" placeholder="Código da Nota" required>
+            <input type="date" id="dataDeEmissao" placeholder="Data de Emissão" required>
+            <input type="number" id="valorTotal" placeholder="Valor Total" step="0.01" required>
+            <textarea id="descricao" placeholder="Descrição"></textarea>
+            <input type="text" id="fkEmpresaClienteCnpj" placeholder="CNPJ da Empresa" required>
+            <button type="submit">Inserir</button>
+        </form>
+    </div>
+
+    <h2>Notas Fiscais Cadastradas</h2>
+    <table id="tabela-notas">
+        <thead>
+        <tr>
+            <th>Código</th>
+            <th>Data de Emissão</th>
+            <th>Valor Total</th>
+            <th>Descrição</th>
+            <th>Empresa (CNPJ)</th>
+            <th>Ações</th>
+        </tr>
+        </thead>
+        <tbody>
+        <!-- Notas fiscais serão carregadas dinamicamente -->
+        </tbody>
+    </table>
+</div>
+
+<!-- Modal para edição -->
+<div id="edit-modal" class="modal">
+    <div class="modal-content">
+        <span class="close" id="close-modal">&times;</span>
+        <h2>Editar Nota Fiscal</h2>
+        <form id="edit-form">
+            <input type="text" id="editCodNota" placeholder="Código da Nota" readonly>
+            <input type="date" id="editDataDeEmissao" placeholder="Data de Emissão" required>
+            <input type="number" id="editValorTotal" placeholder="Valor Total" step="0.01" required>
+            <textarea id="editDescricao" placeholder="Descrição"></textarea>
+            <input type="text" id="editFkEmpresaClienteCnpj" placeholder="CNPJ da Empresa" required>
+            <button type="submit">Salvar Alterações</button>
+        </form>
+    </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>

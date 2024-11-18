@@ -9,6 +9,6 @@ public class HomeController {
 
     @GetMapping("/")
     public String home() {
-        return "redirect:/index.html";
+        return "redirect:/nota-fiscal/index.html";
     }
 }
