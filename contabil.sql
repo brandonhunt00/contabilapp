@@ -12,7 +12,6 @@ CREATE TABLE Empresa_Cliente (
     municipio VARCHAR(100)
 );
 
-ALTER TABLE empresa_cliente ADD COLUMN endereco VARCHAR(255);
 
 INSERT INTO Empresa_Cliente (cnpj, razao_social, telefone, telefone2, email, rua, numero, municipio)
 VALUES 
