@@ -19,17 +19,22 @@ VALUES
 ('98765432000199', 'Empresa B', '21999999999', NULL, 'contato@empresaB.com', 'Rua B', '200', 'Rio de Janeiro');
 
 
-CREATE TABLE Guia_de_Pagamento (
-    numero_da_guia VARCHAR(50) PRIMARY KEY,
+CREATE TABLE Formalizam_Guia (
+    fk_Imposto VARCHAR(50),
+    fk_Guia_de_Pagamento VARCHAR(50),
     data_de_emissao DATE,
     data_de_vencimento DATE,
     valor DOUBLE,
     status_de_pagamento BOOLEAN,
     fk_Empresa_Cliente_cnpj VARCHAR(18),
-    CONSTRAINT FK_Guia_de_Pagamento_Empresa_Cliente FOREIGN KEY (fk_Empresa_Cliente_cnpj)
-    REFERENCES Empresa_Cliente (cnpj)
-    ON DELETE CASCADE
+    PRIMARY KEY (fk_Imposto, fk_Guia_de_Pagamento),
+    CONSTRAINT FK_formalizam_Guia_Imposto FOREIGN KEY (fk_Imposto)
+        REFERENCES Imposto (cod_imposto),
+    CONSTRAINT FK_formalizam_Guia_Empresa_Cliente FOREIGN KEY (fk_Empresa_Cliente_cnpj)
+        REFERENCES Empresa_Cliente (cnpj)
+        ON DELETE CASCADE
 );
+
 
 CREATE TABLE Declaracao_Fiscal (
     cod_Declaracao_Fiscal VARCHAR(50) PRIMARY KEY,
@@ -114,17 +119,6 @@ CREATE TABLE Imposto (
     aliquota FLOAT,
     base_de_calculo DOUBLE
 );
-
-CREATE TABLE formalizam (
-    fk_Imposto VARCHAR(50),
-    fk_Guia_de_Pagamento VARCHAR(50),
-    PRIMARY KEY (fk_Imposto, fk_Guia_de_Pagamento),
-    CONSTRAINT FK_formalizam_Imposto FOREIGN KEY (fk_Imposto)
-    REFERENCES Imposto (cod_imposto),
-    CONSTRAINT FK_formalizam_Guia_de_Pagamento FOREIGN KEY (fk_Guia_de_Pagamento)
-    REFERENCES Guia_de_Pagamento (numero_da_guia)
-);
-
 
 -- Simples Nacional - Comércio
 INSERT INTO Imposto (cod_imposto, tipo, aliquota, base_de_calculo) VALUES ('SN_COMM_FAIXA1', 'Simples Nacional - Comércio', 0.04, 0);
