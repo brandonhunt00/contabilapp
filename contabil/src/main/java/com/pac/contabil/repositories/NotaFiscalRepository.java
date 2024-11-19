@@ -26,14 +26,6 @@ public class NotaFiscalRepository {
         return jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(NotaFiscal.class));
     }
 
-    public NotaFiscal buscarPorCodigo(String codNota) {
-        String sql = "SELECT * FROM Nota_Fiscal WHERE cod_Nota = ?";
-        try {
-            return jdbcTemplate.queryForObject(sql, new BeanPropertyRowMapper<>(NotaFiscal.class), codNota);
-        } catch (EmptyResultDataAccessException e) {
-            return null; // Nota não encontrada
-        }
-    }
 
     public void atualizar(NotaFiscal notaFiscal) {
         String sql = "UPDATE Nota_Fiscal SET data_de_emissao = ?, valor_total = ?, descricao = ?, fk_Empresa_Cliente_cnpj = ? WHERE cod_Nota = ?";
@@ -41,9 +33,18 @@ public class NotaFiscalRepository {
                 notaFiscal.getDescricao(), notaFiscal.getFkEmpresaClienteCnpj(), notaFiscal.getCodNota());
     }
 
-    public void deletar(String codNota) {
-        String sql = "DELETE FROM Nota_Fiscal WHERE cod_Nota = ?";
-        jdbcTemplate.update(sql, codNota);
+    public NotaFiscal buscarPorCodigoECnpj(String codNota, String cnpj) {
+        String sql = "SELECT * FROM Nota_Fiscal WHERE cod_Nota = ? AND fk_Empresa_Cliente_cnpj = ?";
+        try {
+            return jdbcTemplate.queryForObject(sql, new BeanPropertyRowMapper<>(NotaFiscal.class), codNota, cnpj);
+        } catch (EmptyResultDataAccessException e) {
+            return null; // Nota não encontrada
+        }
+    }
+
+    public void deletar(String codNota, String cnpj) {
+        String sql = "DELETE FROM Nota_Fiscal WHERE cod_Nota = ? AND fk_Empresa_Cliente_cnpj = ?";
+        jdbcTemplate.update(sql, codNota, cnpj);
     }
 }
 

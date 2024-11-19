@@ -5,10 +5,10 @@ import com.pac.contabil.repositories.EmpresaClienteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+// Importação adicionada
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Map;
 
 @RestController
 @RequestMapping("/empresa")
@@ -51,4 +51,3 @@ public class EmpresaClienteController {
     }
 
 }
-

@@ -27,9 +27,15 @@ public class NotaFiscalController {
         return ResponseEntity.ok(notaFiscalRepository.listar());
     }
 
-    @GetMapping("/buscar/{codigo}")
-    public ResponseEntity<NotaFiscal> buscar(@PathVariable String codigo) {
-        NotaFiscal nota = notaFiscalRepository.buscarPorCodigo(codigo);
+    @PostMapping("/atualizar")
+    public ResponseEntity<String> atualizar(@RequestBody NotaFiscal notaFiscal) {
+        notaFiscalRepository.atualizar(notaFiscal);
+        return ResponseEntity.ok("Nota fiscal atualizada com sucesso");
+    }
+
+    @GetMapping("/buscar/{codNota}/{cnpj}")
+    public ResponseEntity<NotaFiscal> buscar(@PathVariable String codNota, @PathVariable String cnpj) {
+        NotaFiscal nota = notaFiscalRepository.buscarPorCodigoECnpj(codNota, cnpj);
         if (nota != null) {
             return ResponseEntity.ok(nota);
         } else {
@@ -37,15 +43,9 @@ public class NotaFiscalController {
         }
     }
 
-    @PutMapping("/atualizar")
-    public ResponseEntity<String> atualizar(@RequestBody NotaFiscal notaFiscal) {
-        notaFiscalRepository.atualizar(notaFiscal);
-        return ResponseEntity.ok("Nota fiscal atualizada com sucesso");
-    }
-
-    @DeleteMapping("/deletar/{codigo}")
-    public ResponseEntity<String> deletar(@PathVariable String codigo) {
-        notaFiscalRepository.deletar(codigo);
+    @DeleteMapping("/deletar/{codNota}/{cnpj}")
+    public ResponseEntity<String> deletar(@PathVariable String codNota, @PathVariable String cnpj) {
+        notaFiscalRepository.deletar(codNota, cnpj);
         return ResponseEntity.ok("Nota fiscal deletada com sucesso");
     }
 }
