@@ -79,36 +79,40 @@ function carregarEmpresas() {
         });
 }
 
-function inserirOuAtualizarNotaFiscal(event) {
+let isUpdatingEmpresa = false;
+
+function inserirOuAtualizarEmpresa(event) {
     event.preventDefault();
 
-    const notaFiscal = {
-        codNota: document.getElementById("codNota").value,
-        dataDeEmissao: document.getElementById("dataDeEmissao").value,
-        valorTotal: parseFloat(document.getElementById("valorTotal").value),
-        descricao: document.getElementById("descricao").value,
-        fkEmpresaClienteCnpj: document.getElementById("fkEmpresaClienteCnpj").value
+    const empresa = {
+        cnpj: document.getElementById("cnpj").value,
+        razaoSocial: document.getElementById("razaoSocial").value,
+        telefone: document.getElementById("telefone").value,
+        telefone2: document.getElementById("telefone2").value,
+        email: document.getElementById("email").value,
+        rua: document.getElementById("rua").value,
+        numero: document.getElementById("numero").value,
+        municipio: document.getElementById("municipio").value
     };
 
-    const method = isUpdatingNotaFiscal ? 'PUT' : 'POST';
-    const url = isUpdatingNotaFiscal ? `http://localhost:8080/nota-fiscal/atualizar` : `http://localhost:8080/nota-fiscal/inserir`;
+    const method = isUpdatingEmpresa ? 'PUT' : 'POST';
+    const url = isUpdatingEmpresa ? `http://localhost:8080/empresa/atualizar` : `http://localhost:8080/empresa/inserir`;
 
     fetch(url, {
         method: method,
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(notaFiscal)
+        body: JSON.stringify(empresa)
     })
         .then(response => {
             if (response.ok) {
-                alert("Nota fiscal salva com sucesso!");
-                carregarNotasFiscais();
-                document.getElementById("notaFiscalForm").reset();
-                document.getElementById("codNota").disabled = false;
-                document.getElementById("fkEmpresaClienteCnpj").disabled = false;
-                isUpdatingNotaFiscal = false;
+                alert("Empresa salva com sucesso!");
+                carregarEmpresas();
+                document.getElementById("empresaForm").reset();
+                document.getElementById("cnpj").disabled = false;
+                isUpdatingEmpresa = false;
             } else {
                 response.text().then(text => {
-                    alert("Erro ao salvar nota fiscal: " + text);
+                    alert("Erro ao salvar empresa: " + text);
                 });
             }
         });
@@ -128,9 +132,10 @@ function editarEmpresa(cnpj) {
             document.getElementById("municipio").value = empresa.municipio;
 
             document.getElementById("cnpj").disabled = true;
-            isUpdating = true;
+            isUpdatingEmpresa = true;
         });
 }
+
 
 function deletarEmpresa(cnpj) {
     if (confirm("Tem certeza que deseja deletar esta empresa?")) {
