@@ -12,12 +12,12 @@ CREATE TABLE Empresa_Cliente (
     municipio VARCHAR(100)
 );
 
-
-INSERT INTO Empresa_Cliente (cnpj, razao_social, telefone, telefone2, email, rua, numero, municipio)
-VALUES 
-('12345678000195', 'Empresa A', '11999999999', '11888888888', 'contato@empresaA.com', 'Rua A', '100', 'São Paulo'),
-('98765432000199', 'Empresa B', '21999999999', NULL, 'contato@empresaB.com', 'Rua B', '200', 'Rio de Janeiro');
-
+CREATE TABLE Imposto (
+    cod_imposto VARCHAR(50) PRIMARY KEY,
+    tipo VARCHAR(50),
+    aliquota FLOAT,
+    base_de_calculo DOUBLE
+);
 
 CREATE TABLE Formalizam_Guia (
     fk_Imposto VARCHAR(50),
@@ -113,13 +113,6 @@ CREATE TABLE Lucro_real (
     REFERENCES Empresa_Cliente (cnpj)
 );
 
-CREATE TABLE Imposto (
-    cod_imposto VARCHAR(50) PRIMARY KEY,
-    tipo VARCHAR(50),
-    aliquota FLOAT,
-    base_de_calculo DOUBLE
-);
-
 -- Simples Nacional - Comércio
 INSERT INTO Imposto (cod_imposto, tipo, aliquota, base_de_calculo) VALUES ('SN_COMM_FAIXA1', 'Simples Nacional - Comércio', 0.04, 0);
 INSERT INTO Imposto (cod_imposto, tipo, aliquota, base_de_calculo) VALUES ('SN_COMM_FAIXA2', 'Simples Nacional - Comércio', 0.073, 5940);
@@ -167,8 +160,8 @@ INSERT INTO Imposto (cod_imposto, tipo, aliquota, base_de_calculo) VALUES ('LR_C
 DELIMITER //
 
 CREATE PROCEDURE calcular_imposto_simples_nacional(
-    IN faturamento DECIMAL(15, 2), 
-    IN categoria VARCHAR(20), 
+    IN faturamento DECIMAL(15, 2),
+    IN categoria VARCHAR(20),
     OUT resultado DECIMAL(15, 2)
 )
 BEGIN
@@ -195,7 +188,6 @@ BEGIN
             SET aliquota = 0.19;
             SET valor_a_deduzir = 378000;
         END IF;
-
     ELSEIF categoria = 'Serviço' THEN
         IF faturamento <= 180000 THEN
             SET aliquota = 0.06;
@@ -224,15 +216,13 @@ END;
 
 DELIMITER ;
 
-
 DELIMITER //
 
-CREATE FUNCTION calcular_imposto_lucro_presumido(
-    receita_bruta DECIMAL(15, 2),
-    categoria VARCHAR(20)
+CREATE PROCEDURE calcular_imposto_lucro_presumido(
+    IN receita_bruta DECIMAL(15, 2),
+    IN categoria VARCHAR(20),
+    OUT resultado DECIMAL(15, 2)
 )
-RETURNS DECIMAL(15, 2)
-DETERMINISTIC
 BEGIN
     DECLARE imposto_total DECIMAL(15, 2);
     DECLARE aliquota_ICMS DECIMAL(5, 2);
@@ -258,7 +248,7 @@ BEGIN
         (receita_bruta * aliquota_CSLL) +
         (receita_bruta * aliquota_IR);
 
-    RETURN imposto_total;
+    SET resultado = imposto_total;
 END;
 //
 
@@ -266,12 +256,11 @@ DELIMITER ;
 
 DELIMITER //
 
-CREATE FUNCTION calcular_imposto_lucro_real(
-    receita_bruta DECIMAL(15, 2),
-    categoria VARCHAR(20)
+CREATE PROCEDURE calcular_imposto_lucro_real(
+    IN receita_bruta DECIMAL(15, 2),
+    IN categoria VARCHAR(20),
+    OUT resultado DECIMAL(15, 2)
 )
-RETURNS DECIMAL(15, 2)
-DETERMINISTIC
 BEGIN
     DECLARE imposto_total DECIMAL(15, 2);
     DECLARE aliquota_ICMS DECIMAL(5, 2);
@@ -297,8 +286,9 @@ BEGIN
         (receita_bruta * aliquota_CSLL) +
         (receita_bruta * aliquota_IR);
 
-    RETURN imposto_total;
+    SET resultado = imposto_total;
 END;
 //
 
 DELIMITER ;
+
