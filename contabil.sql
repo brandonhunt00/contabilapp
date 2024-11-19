@@ -65,15 +65,26 @@ CREATE TABLE Nota_Fiscal (
     REFERENCES Empresa_Cliente (cnpj)
 );
 
-CREATE TABLE Funcionario (
-    cpf VARCHAR(11) PRIMARY KEY,
+CREATE TABLE Funcionario_Apura (
+    cpf VARCHAR(11),
     nome VARCHAR(100),
     departamento VARCHAR(50),
     telefone VARCHAR(15),
     email VARCHAR(100),
     cpf_gerente VARCHAR(11),
-    CONSTRAINT FK_Funcionario_Gerente FOREIGN KEY (cpf_gerente) REFERENCES Funcionario (cpf)
+    fk_Nota_Fiscal_cod VARCHAR(50),
+    fk_Nota_Fiscal_cnpj VARCHAR(18),
+    fk_Imposto VARCHAR(50),
+    PRIMARY KEY (cpf, fk_Nota_Fiscal_cod, fk_Nota_Fiscal_cnpj, fk_Imposto),
+    UNIQUE (cpf),
+    CONSTRAINT FK_Funcionario_Apura_Nota_Fiscal FOREIGN KEY (fk_Nota_Fiscal_cod, fk_Nota_Fiscal_cnpj)
+        REFERENCES Nota_Fiscal (cod_Nota, fk_Empresa_Cliente_cnpj),
+    CONSTRAINT FK_Funcionario_Apura_Imposto FOREIGN KEY (fk_Imposto)
+        REFERENCES Imposto (cod_imposto),
+    CONSTRAINT FK_Funcionario_Apura_Gerente FOREIGN KEY (cpf_gerente)
+        REFERENCES Funcionario_Apura (cpf)
 );
+
 
 
 CREATE TABLE Simples_Nacional (
@@ -114,19 +125,6 @@ CREATE TABLE formalizam (
     REFERENCES Guia_de_Pagamento (numero_da_guia)
 );
 
-CREATE TABLE apura (
-    fk_Nota_Fiscal_cod VARCHAR(50),
-    fk_Nota_Fiscal_cnpj VARCHAR(18),
-    fk_Funcionario VARCHAR(11),
-    fk_Imposto VARCHAR(50),
-    PRIMARY KEY (fk_Nota_Fiscal_cod, fk_Nota_Fiscal_cnpj, fk_Funcionario, fk_Imposto),
-    CONSTRAINT FK_apura_Nota_Fiscal FOREIGN KEY (fk_Nota_Fiscal_cod, fk_Nota_Fiscal_cnpj)
-    REFERENCES Nota_Fiscal (cod_Nota, fk_Empresa_Cliente_cnpj),
-    CONSTRAINT FK_apura_Funcionario FOREIGN KEY (fk_Funcionario)
-    REFERENCES Funcionario (cpf),
-    CONSTRAINT FK_apura_Imposto FOREIGN KEY (fk_Imposto)
-    REFERENCES Imposto (cod_imposto)
-);
 
 -- Simples Nacional - Comércio
 INSERT INTO Imposto (cod_imposto, tipo, aliquota, base_de_calculo) VALUES ('SN_COMM_FAIXA1', 'Simples Nacional - Comércio', 0.04, 0);
