@@ -38,7 +38,7 @@ O sistema garante a segurança dos dados e a conformidade legal com as legislaç
 
 <details>
   <summary>Lógico</summary>
-![Logico_1](https://github.com/user-attachments/assets/aca2748a-f8a2-46c0-8fa7-1f1f8adfd11a)
+(https://github.com/user-attachments/assets/f8607271-2ee5-46fd-b525-f6fac6de9f18)
 </details>
 
 ## Membros do Grupo:
